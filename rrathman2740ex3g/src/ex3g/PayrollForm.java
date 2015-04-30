@@ -24,6 +24,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.JOptionPane;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 
 public class PayrollForm extends JFrame {
@@ -40,6 +42,7 @@ public class PayrollForm extends JFrame {
 	private JTextField empIdTextField;
 	private JTextField empNameTextField;
 	private JTextField payRateTextField;
+	private PayrollObjMapper payrollObjMapper;
 
 	/**
 	 * Launch the application.
@@ -61,6 +64,12 @@ public class PayrollForm extends JFrame {
 	 * Create the frame.
 	 */
 	public PayrollForm() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				do_this_windowClosing(arg0);
+			}
+		});
 		setTitle("CAnderson 2740 Ex 2E Payroll");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 467, 372);
@@ -77,12 +86,16 @@ public class PayrollForm extends JFrame {
 		contentPane.add(scrollPane);
 		
 //		employeeList = new JList();
-		employeeListModel = new DefaultListModel();
-		employeeListModel.addElement(new Payroll (101, "Robert Rathman", 10.0));
-		employeeListModel.addElement(new Payroll (102, "Isabel Torres", 20.0));
-		employeeListModel.addElement(new Payroll (103, "Kyle Kastensmidt", 30.0));
-		employeeListModel.addElement(new Payroll (104, "Erik Bennick", 40.0));
-		employeeListModel.addElement(new Payroll (105, "Josh Cowell", 50.0));
+//		employeeListModel = new DefaultListModel();
+//		employeeListModel.addElement(new Payroll (101, "Robert Rathman", 10.0));
+//		employeeListModel.addElement(new Payroll (102, "Isabel Torres", 20.0));
+//		employeeListModel.addElement(new Payroll (103, "Kyle Kastensmidt", 30.0));
+//		employeeListModel.addElement(new Payroll (104, "Erik Bennick", 40.0));
+//		employeeListModel.addElement(new Payroll (105, "Josh Cowell", 50.0));
+		
+		payrollObjMapper = new PayrollObjMapper("PayrollData.txt");
+		employeeListModel = payrollObjMapper.getAllPayroll();
+		
 		employeeList = new JList(employeeListModel);
 		employeeList.addMouseListener(new MouseAdapter() {
 			@Override
@@ -297,7 +310,13 @@ public class PayrollForm extends JFrame {
 		 
 		 employeeList.repaint(); 
 	}
+	
+	
 
 		
+	protected void do_this_windowClosing(WindowEvent arg0) {
+		if (payrollObjMapper != null) 
+			payrollObjMapper.writeAllPayroll(employeeListModel);
+	}
 }
 

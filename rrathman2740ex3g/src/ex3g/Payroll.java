@@ -18,6 +18,14 @@ public class Payroll {
 		this.payRate = payRate;
 		this.hours = 0;
 	}
+	
+	public Payroll(int id, String name, Double payRate, double hours) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.payRate = payRate;
+		this.hours = hours;
+	}
 
 
 	public int getId() {

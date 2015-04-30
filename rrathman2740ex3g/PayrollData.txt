@@ -1,0 +1,12 @@
+101
+Robert Rathman
+15.0
+0.0
+102
+Isa Torres
+20.0
+0.0
+103
+Erik Bennick
+10.0
+0.0
